@@ -4,6 +4,7 @@
     bun
     cargo
     clippy
+    antigravity
     rust-analyzer
     rustc
     rustfmt
