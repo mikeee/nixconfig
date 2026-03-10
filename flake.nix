@@ -24,20 +24,6 @@
             ];
           specialArgs = { home-manager = home-manager; };
         };
-        dell-xps9570 = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-            modules = [
-              stateVersionModule
-              ./hosts/dell-xps9570/default.nix
-            ];
-        };
-        mac-m4-work = nixpkgs.lib.nixosSystem {
-          system = "aarch64-darwin";
-            modules = [
-              stateVersionModule
-              ./hosts/mac-m4-work/default.nix
-            ];
-        };
       };
     };
 }
