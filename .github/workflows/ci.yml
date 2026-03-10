@@ -1,0 +1,30 @@
+name: NixOS CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build (${{ matrix.platform }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux
+            runs-on: ubuntu-latest
+            install-nix: true
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Install Nix
+        if: ${{ matrix.install-nix }}
+        uses: cachix/install-nix-action@19effe9fe722874e6d46dd7182e4b8b7a43c4a99 # v31.10.0
+      - name: Run Linux build tests
+        if: ${{ matrix.platform == 'linux' }}
+        shell: bash
+        run: |
+          chmod +x tests/build.sh
+          ./tests/build.sh
