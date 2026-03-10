@@ -12,5 +12,6 @@
     nodejs
     pinentry-curses
     python3
+    vscode
   ];
 }
