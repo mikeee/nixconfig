@@ -9,6 +9,8 @@
     rustc
     rustfmt
     go
+    jetbrains.goland
+    jetbrains.rust-rover
     gemini-cli
     nodejs
     pinentry-curses
