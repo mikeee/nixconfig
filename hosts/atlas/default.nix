@@ -18,11 +18,11 @@
 
   # Basic file system config for the XPS 9570
   fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
+    device = "/dev/nvme0n1p2";
     fsType = "ext4";
   };
   fileSystems."/boot" = {
-    device = "/dev/disk/by-label/boot";
+    device = "/dev/nvme0n1p1";
     fsType = "vfat";
   };
 
