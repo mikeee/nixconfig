@@ -15,16 +15,22 @@ jobs:
         include:
           - platform: linux
             runs-on: ubuntu-latest
-            install-nix: true
+          - platform: macos
+            runs-on: macos-latest
     runs-on: ${{ matrix.runs-on }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install Nix
-        if: ${{ matrix.install-nix }}
-        uses: cachix/install-nix-action@19effe9fe722874e6d46dd7182e4b8b7a43c4a99 # v31.10.0
+        uses: DeterminateSystems/nix-installer-action@9a59e15a74545c99a626ba594edcd0d02189e670 # main as of 23/03/2026
       - name: Run Linux build tests
         if: ${{ matrix.platform == 'linux' }}
         shell: bash
         run: |
           chmod +x tests/build.sh
           ./tests/build.sh
+      - name: Run macOS eval smoke tests
+        if: ${{ matrix.platform == 'macos' }}
+        shell: bash
+        run: |
+          nix --extra-experimental-features 'nix-command flakes' eval --raw .#nixosConfigurations.vm-aarch64.pkgs.stdenv.hostPlatform.system
+          nix --extra-experimental-features 'nix-command flakes' eval --raw .#nixosConfigurations.vm-x86_64.pkgs.stdenv.hostPlatform.system
