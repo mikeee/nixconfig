@@ -29,17 +29,4 @@
   # Standard kernel modules for XPS 9570
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
 
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.users.mike = {
-    imports = [
-      ../../home/base/home.nix
-    ];
-    home.stateVersion = config.system.stateVersion;
-    home.packages = with pkgs; [ vim git ];
-    programs.bash.enable = true;
-    home.sessionVariables = {
-      EDITOR = "vim";
-    };
-  };
 }

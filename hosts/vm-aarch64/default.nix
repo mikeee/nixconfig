@@ -11,20 +11,6 @@
 
   programs.firefox.enable = true;
 
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-
-  home-manager.users.mike = {
-    imports = [
-      ../../home/base/home.nix
-    ];
-    home.stateVersion = config.system.stateVersion;
-    home.packages = with pkgs; [ vim git ];
-    programs.bash.enable = true;
-    home.sessionVariables = {
-      EDITOR = "vim";
-    };
-  };
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
