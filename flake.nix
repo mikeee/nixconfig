@@ -38,6 +38,15 @@
             ];
           specialArgs = { home-manager = home-manager; };
         };
+        vm-aarch64 = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+            modules = [
+              home-manager.nixosModules.home-manager
+              stateVersionModule
+              ./hosts/vm-aarch64/default.nix
+            ];
+          specialArgs = { home-manager = home-manager; };
+        };
       };
     };
 }

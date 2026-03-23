@@ -4,6 +4,7 @@ Multi-machine NixOS flake for NixOS 25.11 with Home Manager, roles, overlays, an
 
 ## Hosts
 - vm-x86_64
+- vm-aarch64
 
 Home Manager is enabled for all hosts, including VMs. Configurations are in `home/base`.
 
