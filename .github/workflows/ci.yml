@@ -15,6 +15,8 @@ jobs:
         include:
           - platform: linux
             runs-on: ubuntu-latest
+          - platform: linux-arm
+            runs-on: ubuntu-24.04-arm
           - platform: macos
             runs-on: macos-latest
     runs-on: ${{ matrix.runs-on }}
@@ -23,7 +25,7 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@9a59e15a74545c99a626ba594edcd0d02189e670 # main as of 23/03/2026
       - name: Run Linux build tests
-        if: ${{ matrix.platform == 'linux' }}
+        if: ${{ matrix.platform == 'linux' || matrix.platform == 'linux-arm' }}
         shell: bash
         run: |
           chmod +x tests/build.sh
