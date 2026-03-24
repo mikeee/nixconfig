@@ -9,6 +9,9 @@
 
   programs.gnupg.agent = {
     enable = true;
-    pinentryPackage = pkgs.pinentry-curses;
+    pinentryPackage =
+      if config.services.xserver.enable
+      then pkgs.pinentry-gnome3
+      else pkgs.pinentry-curses;
   };
 }

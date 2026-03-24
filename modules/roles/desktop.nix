@@ -1,10 +1,5 @@
-{ lib, pkgs, ... }:
-let
-  allowedUnfreePackages = [ "vscode" ];
-in {
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) allowedUnfreePackages;
-
+{ pkgs, ... }:
+{
   services.xserver.enable = true;
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
