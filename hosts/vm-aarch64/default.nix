@@ -12,16 +12,12 @@
   programs.firefox.enable = true;
 
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = false;
+  virtualisation.vmware.guest.enable = true;
 
-  fileSystems."/boot" = {
-    device = "/dev/vda15";
-    fsType = "vfat";
-  };
 
-  fileSystems."/" = {
-    device = "/dev/vda1";
-    fsType = "ext4";
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/sda";
+    useOSProber = true;
   };
 }
