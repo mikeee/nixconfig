@@ -6,9 +6,18 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build (${{ matrix.platform }})
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -20,6 +29,9 @@ jobs:
           - platform: macos
             runs-on: macos-latest
     runs-on: ${{ matrix.runs-on }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install Nix
@@ -28,15 +40,19 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
           extra_nix_config: |
             experimental-features = nix-command flakes
+      - name: Flake evaluation
+        run: |
+          set -euo pipefail
+          nix flake check --all-systems --no-build --no-write-lock-file
       - name: Run Linux build tests
         if: ${{ matrix.platform == 'linux' || matrix.platform == 'linux-arm' }}
-        shell: bash
         run: |
+          set -euo pipefail
           chmod +x tests/build.sh
           ./tests/build.sh
       - name: Run macOS eval smoke tests
         if: ${{ matrix.platform == 'macos' }}
-        shell: bash
         run: |
+          set -euo pipefail
           nix eval --raw .#nixosConfigurations.vm-aarch64.pkgs.stdenv.hostPlatform.system
           nix eval --raw .#nixosConfigurations.vm-x86_64.pkgs.stdenv.hostPlatform.system

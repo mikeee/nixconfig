@@ -1,11 +1,20 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
+  allowedUnfreePackages = [
+    "antigravity"
+    "brave"
+    "goland"
+    "rust-rover"
+    "vscode-extension-github-copilot"
+    "vscode-extension-github-copilot-chat"
+  ];
   hasDesktopSession =
     config.services.xserver.enable
     || config.services.displayManager.gdm.enable
     || config.services.desktopManager.gnome.enable;
 in {
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) allowedUnfreePackages;
 
   environment.systemPackages = with pkgs; [
     git

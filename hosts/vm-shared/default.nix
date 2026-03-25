@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ lib, ... }:
 {
   imports = [
     ../common
@@ -8,6 +8,16 @@
   fileSystems."/" = {
     device = lib.mkDefault "/dev/sda1";
     fsType = "ext4";
+  };
+
+  programs.firefox.enable = true;
+
+  virtualisation.vmware.guest.enable = true;
+
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/sda";
+    useOSProber = true;
   };
 
   networking.networkmanager.enable = true;

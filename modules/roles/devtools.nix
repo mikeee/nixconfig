@@ -1,21 +1,18 @@
-{ lib, config, pkgs, ... }:
-let
-  allowedUnfreePackages = [ "github-copilot" "github-copilot-chat" ];
-in {
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) allowedUnfreePackages;
-
+{ pkgs, ... }:
+{
   home-manager.users.mike = {
     programs.vscode = {
       enable = true;
       package = pkgs.vscodium;
-      extensions = with pkgs.vscode-extensions; [
-        github.copilot
-        github.copilot-chat
-      ];
-      userSettings = {
-        "chat.disableAIFeatures" = false;
-        "git.autofetch" = true;
+      profiles.default = {
+        extensions = with pkgs.vscode-extensions; [
+          github.copilot
+          github.copilot-chat
+        ];
+        userSettings = {
+          "chat.disableAIFeatures" = false;
+          "git.autofetch" = true;
+        };
       };
     };
   };

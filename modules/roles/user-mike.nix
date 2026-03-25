@@ -1,5 +1,15 @@
 { config, pkgs, ... }:
-{
+let
+  shellAliases = {
+    code = "codium";
+  };
+  gpgInitSnippet = ''
+    if [[ -t 1 ]]; then
+      export GPG_TTY="$(tty)"
+      gpg-connect-agent updatestartuptty /bye >/dev/null
+    fi
+  '';
+in {
   users.users.mike = {
     isNormalUser = true;
     description = "mike";
@@ -30,29 +40,15 @@
     };
     programs.bash = {
       enable = true;
-      shellAliases = {
-        code = "codium";
-      };
-      initExtra = ''
-        if [[ -t 1 ]]; then
-          export GPG_TTY="$(tty)"
-          gpg-connect-agent updatestartuptty /bye >/dev/null
-        fi
-      '';
+      inherit shellAliases;
+      initExtra = gpgInitSnippet;
     };
     programs.git.enable = true;
     programs.neovim.enable = true;
     programs.zsh = {
       enable = true;
-      shellAliases = {
-        code = "codium";
-      };
-      initContent = ''
-        if [[ -t 1 ]]; then
-          export GPG_TTY="$(tty)"
-          gpg-connect-agent updatestartuptty /bye >/dev/null
-        fi
-      '';
+      inherit shellAliases;
+      initContent = gpgInitSnippet;
     };
   };
 }

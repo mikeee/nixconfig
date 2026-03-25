@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 {
   imports = [
     ../vm-shared
@@ -8,16 +8,4 @@
   ];
 
   networking.hostName = "nixos-arm";
-
-  programs.firefox.enable = true;
-
-
-  virtualisation.vmware.guest.enable = true;
-
-
-  boot.loader.grub = {
-    enable = true;
-    device = "/dev/sda";
-    useOSProber = true;
-  };
 }

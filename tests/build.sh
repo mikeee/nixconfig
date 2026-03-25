@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
 NIX_FLAGS=(--extra-experimental-features 'nix-command flakes')
 
-HOSTS=()
+declare -a HOSTS=()
+shopt -s nullglob
+
 for host_file in hosts/*/default.nix; do
   host=$(basename "$(dirname "$host_file")")
 
@@ -16,7 +18,14 @@ for host_file in hosts/*/default.nix; do
   HOSTS+=("$host")
 done
 
+if [[ ${#HOSTS[@]} -eq 0 ]]; then
+  echo "No hosts found under hosts/*/default.nix."
+  exit 1
+fi
+
 current_system=$(nix "${NIX_FLAGS[@]}" eval --impure --raw --expr builtins.currentSystem)
+
+rm -f result
 
 for host in "${HOSTS[@]}"; do
   host_system=$(nix "${NIX_FLAGS[@]}" eval --raw ".#nixosConfigurations.${host}.pkgs.stdenv.hostPlatform.system" 2>/dev/null || true)
@@ -32,7 +41,9 @@ for host in "${HOSTS[@]}"; do
   fi
 
   echo "Building NixOS configuration for $host..."
-  nix "${NIX_FLAGS[@]}" build .#nixosConfigurations.$host.config.system.build.toplevel || exit 1
+  nix "${NIX_FLAGS[@]}" build \
+    --out-link "result-${host}" \
+    ".#nixosConfigurations.${host}.config.system.build.toplevel"
   echo "Build for $host succeeded."
 done
 
