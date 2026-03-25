@@ -15,6 +15,7 @@ in {
       ];
       userSettings = {
         "chat.disableAIFeatures" = false;
+        "git.autofetch" = true;
       };
     };
   };
