@@ -1,0 +1,42 @@
+name: NixOS CI (upstream Nix)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build (${{ matrix.platform }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux
+            runs-on: ubuntu-latest
+          - platform: linux-arm
+            runs-on: ubuntu-24.04-arm
+          - platform: macos
+            runs-on: macos-latest
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: Run Linux build tests
+        if: ${{ matrix.platform == 'linux' || matrix.platform == 'linux-arm' }}
+        shell: bash
+        run: |
+          chmod +x tests/build.sh
+          ./tests/build.sh
+      - name: Run macOS eval smoke tests
+        if: ${{ matrix.platform == 'macos' }}
+        shell: bash
+        run: |
+          nix eval --raw .#nixosConfigurations.vm-aarch64.pkgs.stdenv.hostPlatform.system
+          nix eval --raw .#nixosConfigurations.vm-x86_64.pkgs.stdenv.hostPlatform.system
