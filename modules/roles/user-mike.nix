@@ -16,11 +16,24 @@
     home.stateVersion = config.system.stateVersion;
     home.packages = with pkgs; [ vim git ];
     home.sessionVariables.EDITOR = "vim";
+    systemd.user.services.gpg-agent-startup-refresh = {
+      Unit = {
+        Description = "Refresh gpg-agent startup tty/display for GUI pinentry";
+        After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.gnupg}/bin/gpg-connect-agent updatestartuptty /bye";
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
     programs.bash = {
       enable = true;
       initExtra = ''
         if [[ -t 1 ]]; then
           export GPG_TTY="$(tty)"
+          gpg-connect-agent updatestartuptty /bye >/dev/null
         fi
       '';
     };
@@ -31,6 +44,7 @@
       initContent = ''
         if [[ -t 1 ]]; then
           export GPG_TTY="$(tty)"
+          gpg-connect-agent updatestartuptty /bye >/dev/null
         fi
       '';
     };

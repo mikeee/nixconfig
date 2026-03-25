@@ -32,7 +32,7 @@ in {
     jetbrains.rust-rover
     gemini-cli
     nodejs
-    pinentry-curses
+    pinentry-gnome3
     python3
     vscodium
     vscode
