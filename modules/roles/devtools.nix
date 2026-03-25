@@ -1,6 +1,6 @@
 { lib, config, pkgs, ... }:
 let
-  allowedUnfreePackages = [ "vscode" "github-copilot" "github-copilot-chat" ];
+  allowedUnfreePackages = [ "github-copilot" "github-copilot-chat" ];
 in {
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) allowedUnfreePackages;
@@ -35,6 +35,5 @@ in {
     pinentry-gnome3
     python3
     vscodium
-    vscode
   ];
 }

@@ -30,6 +30,9 @@
     };
     programs.bash = {
       enable = true;
+      shellAliases = {
+        code = "codium";
+      };
       initExtra = ''
         if [[ -t 1 ]]; then
           export GPG_TTY="$(tty)"
@@ -41,6 +44,9 @@
     programs.neovim.enable = true;
     programs.zsh = {
       enable = true;
+      shellAliases = {
+        code = "codium";
+      };
       initContent = ''
         if [[ -t 1 ]]; then
           export GPG_TTY="$(tty)"
