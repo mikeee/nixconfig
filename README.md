@@ -45,3 +45,9 @@ To build and apply your locally written flake for a specific host, use:
 ```sh
 sudo nixos-rebuild switch --flake .#<host>
 ```
+
+To build and set the next-boot generation (without switching immediately), use:
+
+```sh
+sudo nixos-rebuild boot --flake .#<host>
+```

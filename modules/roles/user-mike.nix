@@ -43,7 +43,11 @@ in {
       inherit shellAliases;
       initExtra = gpgInitSnippet;
     };
-    programs.git.enable = true;
+    programs.git = {
+      enable = true;
+      userName = "mike";
+      userEmail = "nix@mike.ee";
+    };
     programs.neovim.enable = true;
     programs.zsh = {
       enable = true;

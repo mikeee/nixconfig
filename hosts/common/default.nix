@@ -13,6 +13,8 @@ let
     || config.services.displayManager.gdm.enable
     || config.services.desktopManager.gnome.enable;
 in {
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) allowedUnfreePackages;
 
