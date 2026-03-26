@@ -30,6 +30,7 @@
     jetbrains.goland
     jetbrains.rust-rover
     gemini-cli
+    gnumake
     nodejs
     pinentry-gnome3
     python3
