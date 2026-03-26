@@ -47,6 +47,9 @@ in {
       enable = true;
       userName = "mike";
       userEmail = "nix@mike.ee";
+      extraConfig = {
+        push.autoSetupRemote = true;
+      };
     };
     programs.neovim.enable = true;
     programs.zsh = {

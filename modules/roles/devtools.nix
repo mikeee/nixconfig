@@ -12,6 +12,7 @@
         userSettings = {
           "chat.disableAIFeatures" = false;
           "git.autofetch" = true;
+          "git.alwaysSignOff" = true;
         };
       };
     };
