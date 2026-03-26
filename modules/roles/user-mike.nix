@@ -45,10 +45,14 @@ in {
     };
     programs.git = {
       enable = true;
-      userName = "mike";
-      userEmail = "nix@mike.ee";
-      extraConfig = {
-        push.autoSetupRemote = true;
+      settings = {
+        user = {
+          name = "mike";
+          email = "nix@mike.ee";
+        };
+        push = {
+          autoSetupRemote = true;
+        };
       };
     };
     programs.neovim.enable = true;
