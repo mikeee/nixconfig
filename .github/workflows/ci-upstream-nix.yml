@@ -43,7 +43,8 @@ jobs:
       - name: Flake evaluation
         run: |
           set -euo pipefail
-          nix flake check --all-systems --no-build --no-write-lock-file
+          nix flake check --all-systems --no-build --no-write-lock-file \
+            --override-input dotfiles path:./stubs/dotfiles
       - name: Run Linux build tests
         if: ${{ matrix.platform == 'linux' || matrix.platform == 'linux-arm' }}
         run: |
