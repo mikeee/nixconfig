@@ -6,9 +6,13 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    dotfiles = {
+      url = "git+https://github.com/mikeee/dotfiles.git?ref=main";
+      flake = false;
+    };
   };
 
-  outputs = { nixpkgs, home-manager, nixos-hardware, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, dotfiles, ... }:
     let
       stateVersion = "25.11";
       stateVersionModule = { ... }: {
@@ -17,6 +21,9 @@
       mkHost = { system, modules }:
         nixpkgs.lib.nixosSystem {
           inherit system;
+          specialArgs = {
+            inherit dotfiles;
+          };
           modules = [
             home-manager.nixosModules.home-manager
             stateVersionModule

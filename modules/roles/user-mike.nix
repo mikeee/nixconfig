@@ -1,5 +1,20 @@
-{ config, pkgs, ... }:
+{ config, pkgs, dotfiles, ... }:
 let
+  nvimConfigSource = pkgs.runCommand "nvim-config" { } ''
+    cp -r ${dotfiles}/.config/nvim "$out"
+    chmod -R u+w "$out"
+    rm -f "$out/lazy-lock.json"
+
+    awk '
+      /require\("lazy"\)\.setup\(\{/ {
+        print
+        print "  lockfile = vim.fn.stdpath(\"state\") .. \"/lazy-lock.json\",";
+        next
+      }
+      { print }
+    ' "$out/lua/config/lazy.lua" > "$out/lua/config/lazy.lua.tmp"
+    mv "$out/lua/config/lazy.lua.tmp" "$out/lua/config/lazy.lua"
+  '';
   shellAliases = {
     code = "codium";
   };
@@ -24,7 +39,12 @@ in {
   home-manager.useUserPackages = true;
   home-manager.users.mike = {
     home.stateVersion = config.system.stateVersion;
-    home.packages = with pkgs; [ vim git ];
+    xdg.configFile."nvim" = {
+      source = nvimConfigSource;
+      recursive = true;
+      force = true;
+    };
+    home.packages = with pkgs; [ vim git gcc ];
     home.sessionVariables.EDITOR = "vim";
     systemd.user.services.gpg-agent-startup-refresh = {
       Unit = {

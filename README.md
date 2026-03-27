@@ -18,6 +18,7 @@ nix --extra-experimental-features 'nix-command flakes' build \
 ```
 
 The `tests/build.sh` helper already does this, removes any stale generic `result` link, and writes outputs like `result-vm-x86_64`.
+For hosts that configure Home Manager user `mike`, it also verifies that `~/.config/nvim` is generated as a symlink in Home Manager `home-files`.
 
 ## Applying the Flake
 To apply the flake to a specific host:
@@ -37,6 +38,16 @@ Builds and checks are run via GitHub Actions. See `.github/workflows/ci-upstream
 - `modules/roles/`: Role modules
 - `tests/`: Build and activation tests
 - `.github/workflows/`: CI workflows
+
+## Neovim Config Source
+
+Neovim config for user `mike` is sourced from `mikeee/dotfiles` at `.config/nvim` via a flake input (`dotfiles`) and linked into `~/.config/nvim` through Home Manager.
+
+If you update the dotfiles ref or add the input for the first time, refresh the lock file with:
+
+```sh
+nix --extra-experimental-features 'nix-command flakes' flake update dotfiles
+```
 
 ## Local Flake Build & Apply
 

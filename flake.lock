@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "dotfiles": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1768298862,
+        "narHash": "sha256-0X3mxlx/4YiKpr1XnOf5oeeAj2c3i1sXSKJYltN4bho=",
+        "ref": "main",
+        "rev": "111b43ba9456b2b51d279177ab9b95d3245171f2",
+        "revCount": 48,
+        "type": "git",
+        "url": "https://github.com/mikeee/dotfiles.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "https://github.com/mikeee/dotfiles.git"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -54,6 +71,7 @@
     },
     "root": {
       "inputs": {
+        "dotfiles": "dotfiles",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs"
