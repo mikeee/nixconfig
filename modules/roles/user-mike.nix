@@ -67,8 +67,8 @@ in {
       enable = true;
       settings = {
         user = {
-          name = "mike";
-          email = "nix@mike.ee";
+          name = "Mike Nguyen";
+          email = "hey@mike.ee";
         };
         push = {
           autoSetupRemote = true;
