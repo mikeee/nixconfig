@@ -5,7 +5,6 @@ let
     "brave"
     "goland"
     "rust-rover"
-    "vscode-extension-github-copilot"
     "vscode-extension-github-copilot-chat"
   ];
   hasDesktopSession =

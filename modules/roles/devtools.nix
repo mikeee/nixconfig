@@ -1,4 +1,12 @@
 { pkgs, ... }:
+let
+  copilotChat = pkgs.vscode-utils.extensionFromVscodeMarketplace {
+    name = "copilot-chat";
+    publisher = "GitHub";
+    version = "0.42.0";
+    hash = "sha256-iKDRDqQ8qJe2c4SQJBiJLCEtmVmcci6753+I7uH7YVk=";
+  };
+in
 {
   home-manager.users.mike = {
     programs.vscode = {
@@ -6,8 +14,7 @@
       package = pkgs.vscodium;
       profiles.default = {
         extensions = with pkgs.vscode-extensions; [
-          github.copilot
-          github.copilot-chat
+          copilotChat
         ];
         userSettings = {
           "chat.disableAIFeatures" = false;
