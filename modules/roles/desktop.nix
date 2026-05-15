@@ -17,11 +17,12 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    wireplumber.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
     neovim
     brave
+    _1password-gui
+    _1password-cli
   ];
 }

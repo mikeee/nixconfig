@@ -15,9 +15,7 @@ let
     ' "$out/lua/config/lazy.lua" > "$out/lua/config/lazy.lua.tmp"
     mv "$out/lua/config/lazy.lua.tmp" "$out/lua/config/lazy.lua"
   '';
-  shellAliases = {
-    code = "codium";
-  };
+  shellAliases = { };
   gpgInitSnippet = ''
     if [[ -t 1 ]]; then
       export GPG_TTY="$(tty)"
@@ -37,6 +35,7 @@ in {
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
+  home-manager.backupFileExtension = "backup";
   home-manager.users.mike = {
     home.stateVersion = config.system.stateVersion;
     xdg.configFile."nvim" = {

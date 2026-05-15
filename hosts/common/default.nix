@@ -1,10 +1,15 @@
 { config, lib, pkgs, ... }:
 let
   allowedUnfreePackages = [
+    "1password"
+    "1password-cli"
+    "android-studio"
     "antigravity"
     "brave"
+    "github-copilot-cli"
     "goland"
     "rust-rover"
+    "vscode"
     "vscode-extension-github-copilot-chat"
   ];
   hasDesktopSession =
@@ -15,7 +20,23 @@ in {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) allowedUnfreePackages;
+    let name = lib.getName pkg;
+    in builtins.elem name allowedUnfreePackages
+      || lib.hasPrefix "android" name
+      || lib.hasPrefix "system-image" name
+      || builtins.elem name [
+        "build-tools"
+        "cmake"
+        "cmdline-tools"
+        "emulator"
+        "ndk"
+        "platform-tools"
+        "platforms"
+        "sources"
+        "tools"
+      ];
+
+  nixpkgs.config.android_sdk.accept_license = true;
 
   environment.systemPackages = with pkgs; [
     git
