@@ -2,7 +2,6 @@
 {
   imports = [
     ../common
-    ../../modules/roles/mobile-dev.nix
   ];
 
   # Shared VM config
