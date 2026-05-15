@@ -30,6 +30,7 @@ in
     cargo
     clippy
     antigravity
+    docker-compose
     rust-analyzer
     rustc
     rustfmt
@@ -45,4 +46,11 @@ in
     vscode
     vscodium
   ];
+
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
+  };
+
+  users.users.mike.extraGroups = [ "docker" ];
 }
