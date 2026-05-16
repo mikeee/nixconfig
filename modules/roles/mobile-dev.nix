@@ -11,6 +11,7 @@ let
     includeSources = false;
   };
   androidSdk = androidComposition.androidsdk;
+  jdk = pkgs.jdk17;
 in
 {
   environment.systemPackages = with pkgs; [
@@ -18,6 +19,12 @@ in
     android-studio
     androidSdk
     android-tools
+    jdk
+  ];
+
+  home-manager.users.mike.programs.vscode.profiles.default.extensions = with pkgs.vscode-extensions; [
+    dart-code.dart-code
+    dart-code.flutter
   ];
 
   users.users.mike.extraGroups = [ "kvm" ];
@@ -25,5 +32,6 @@ in
   environment.variables = {
     ANDROID_HOME = "${androidSdk}/libexec/android-sdk";
     ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
+    JAVA_HOME = "${jdk}/lib/openjdk";
   };
 }
