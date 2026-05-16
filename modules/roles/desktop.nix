@@ -1,5 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, onepassword-shell-plugins, ... }:
 {
+  imports = [ onepassword-shell-plugins.nixosModules.default ];
+
   services.xserver.enable = true;
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
@@ -23,6 +25,10 @@
     neovim
     brave
     _1password-gui
-    _1password-cli
   ];
+
+  programs._1password-shell-plugins = {
+    enable = true;
+    plugins = with pkgs; [ gh ];
+  };
 }

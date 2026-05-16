@@ -6,6 +6,7 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    "1password-shell-plugins".url = "github:1Password/shell-plugins";
     dotfiles = {
       url = "git+https://github.com/mikeee/dotfiles.git?ref=main";
       flake = false;
@@ -23,6 +24,7 @@
           inherit system;
           specialArgs = {
             inherit dotfiles;
+            onepassword-shell-plugins = inputs."1password-shell-plugins";
           };
           modules = [
             home-manager.nixosModules.home-manager
