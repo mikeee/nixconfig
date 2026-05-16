@@ -28,7 +28,7 @@ in {
     description = "mike";
     home = "/home/mike";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "onepassword-cli" ];
   };
 
   programs.zsh.enable = true;
