@@ -35,7 +35,7 @@ in
     rustc
     rustfmt
     go
-    github-copilot-cli
+    (github-copilot-cli.overrideAttrs { doInstallCheck = false; }) # Override to skip install check which fails due to missing node_modules.
     jetbrains.goland
     jetbrains.rust-rover
     gemini-cli
