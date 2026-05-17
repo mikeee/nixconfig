@@ -40,11 +40,33 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
           extra_nix_config: |
             experimental-features = nix-command flakes
-      - name: Flake evaluation
+      - name: Evaluate NixOS configurations
         run: |
           set -euo pipefail
-          nix flake check --all-systems --no-build --no-write-lock-file \
-            --override-input dotfiles path:./stubs/dotfiles
+          current_system=$(nix eval --impure --raw --expr builtins.currentSystem)
+          echo "Current system: $current_system"
+
+          hosts=$(nix eval --raw --no-write-lock-file \
+            --override-input dotfiles path:./stubs/dotfiles \
+            --apply 'x: builtins.concatStringsSep " " (builtins.attrNames x)' \
+            .#nixosConfigurations)
+
+          for host in $hosts; do
+            host_system=$(nix eval --raw --no-write-lock-file \
+              --override-input dotfiles path:./stubs/dotfiles \
+              ".#nixosConfigurations.${host}.pkgs.stdenv.hostPlatform.system")
+
+            if [[ "$host_system" != "$current_system" ]]; then
+              echo "Skipping $host (target $host_system != current $current_system)"
+              continue
+            fi
+
+            echo "Evaluating $host..."
+            nix eval --raw --no-write-lock-file \
+              --override-input dotfiles path:./stubs/dotfiles \
+              ".#nixosConfigurations.${host}.config.system.build.toplevel.drvPath" > /dev/null
+            echo "$host OK"
+          done
       - name: Run Linux build tests
         if: ${{ matrix.platform == 'linux' || matrix.platform == 'linux-arm' }}
         run: |

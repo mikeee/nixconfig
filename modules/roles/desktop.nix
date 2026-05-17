@@ -1,7 +1,5 @@
-{ pkgs, onepassword-shell-plugins, ... }:
+{ pkgs, ... }:
 {
-  imports = [ onepassword-shell-plugins.nixosModules.default ];
-
   services.xserver.enable = true;
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
@@ -30,10 +28,5 @@
   programs._1password-gui = {
     enable = true;
     polkitPolicyOwners = [ "mike" ];
-  };
-
-  programs._1password-shell-plugins = {
-    enable = true;
-    plugins = with pkgs; [ gh ];
   };
 }

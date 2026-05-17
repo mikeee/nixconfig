@@ -4,6 +4,7 @@
     ../vm-shared
     ../../modules/roles/devtools.nix
     ../../modules/roles/desktop.nix
+    ../../modules/roles/1password-shell-plugins.nix
     ../../modules/roles/mobile-dev.nix
     ../../modules/roles/user-mike.nix
   ];
