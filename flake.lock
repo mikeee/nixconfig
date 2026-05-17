@@ -22,18 +22,31 @@
     "dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1768298862,
-        "narHash": "sha256-0X3mxlx/4YiKpr1XnOf5oeeAj2c3i1sXSKJYltN4bho=",
-        "ref": "main",
-        "rev": "111b43ba9456b2b51d279177ab9b95d3245171f2",
-        "revCount": 48,
-        "type": "git",
-        "url": "https://github.com/mikeee/dotfiles.git"
+        "lastModified": 1774961760,
+        "narHash": "sha256-mBPmLfUz48IQPWxfv4ljmiBiEMtRfsQwp2Yfi03hW/w=",
+        "path": "/home/mike/dev/nixconfig/stubs/dotfiles",
+        "type": "path"
       },
       "original": {
         "ref": "main",
         "type": "git",
         "url": "https://github.com/mikeee/dotfiles.git"
+      }
+    },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767039857,
+        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
       }
     },
     "home-manager": {
@@ -69,6 +82,28 @@
       "original": {
         "owner": "NixOS",
         "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
+    "nixos-wsl": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1777732699,
+        "narHash": "sha256-2uX/XtOWZ/oy2rerRynVhqVA//ZXZ3Fo60PikLHEPQc=",
+        "owner": "nix-community",
+        "repo": "NixOS-WSL",
+        "rev": "5482f113fd31ebac131d1ebeb2ae90bf0d5e41f5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "main",
+        "repo": "NixOS-WSL",
         "type": "github"
       }
     },
@@ -110,6 +145,7 @@
         "dotfiles": "dotfiles",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
+        "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2"
       }
     },

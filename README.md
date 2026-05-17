@@ -6,6 +6,7 @@ Multi-machine NixOS flake for NixOS 25.11 with Home Manager, roles, overlays, an
 - atlas
 - vm-x86_64
 - vm-aarch64
+- wsl-nix (NixOS-WSL)
 
 Home Manager is enabled for all hosts, including VMs.
 

@@ -7,13 +7,15 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     "1password-shell-plugins".url = "github:1Password/shell-plugins";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
     dotfiles = {
       url = "git+https://github.com/mikeee/dotfiles.git?ref=main";
       flake = false;
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, dotfiles, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, nixos-wsl, dotfiles, ... }:
     let
       stateVersion = "25.11";
       stateVersionModule = { ... }: {
@@ -53,6 +55,13 @@
           system = "aarch64-linux";
           modules = [
             ./hosts/vm-aarch64/default.nix
+          ];
+        };
+        wsl-nix = mkHost {
+          system = "x86_64-linux";
+          modules = [
+            nixos-wsl.nixosModules.default
+            ./hosts/wsl/default.nix
           ];
         };
       };
