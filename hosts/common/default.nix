@@ -6,6 +6,7 @@ let
     "android-studio"
     "antigravity"
     "brave"
+    "claude-code"
     "github-copilot-cli"
     "goland"
     "rust-rover"
@@ -18,6 +19,11 @@ let
     || config.services.desktopManager.gnome.enable;
 in {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  nixpkgs.overlays = [
+    (import ../../overlays/claude-code.nix)
+    (import ../../overlays/github-copilot-cli.nix)
+  ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     let name = lib.getName pkg;

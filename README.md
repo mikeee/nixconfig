@@ -37,6 +37,7 @@ Builds and checks are run via GitHub Actions. See `.github/workflows/ci-upstream
 - `hosts/`: Host configurations
 - `modules/packages/`: Package module space (currently empty)
 - `modules/roles/`: Role modules
+- `overlays/`: Package overlays
 - `tests/`: Build and activation tests
 - `.github/workflows/`: CI workflows
 
