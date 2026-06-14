@@ -79,3 +79,4 @@ jobs:
           set -euo pipefail
           nix eval --raw .#nixosConfigurations.vm-aarch64.pkgs.stdenv.hostPlatform.system
           nix eval --raw .#nixosConfigurations.vm-x86_64.pkgs.stdenv.hostPlatform.system
+          nix eval --raw .#nixosConfigurations.wsl.pkgs.stdenv.hostPlatform.system

@@ -57,7 +57,7 @@
             ./hosts/vm-aarch64/default.nix
           ];
         };
-        wsl-nix = mkHost {
+        wsl = mkHost {
           system = "x86_64-linux";
           modules = [
             nixos-wsl.nixosModules.default

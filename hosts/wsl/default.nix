@@ -12,7 +12,7 @@
     startMenuLaunchers = true;
   };
 
-  networking.hostName = "wsl-nix";
+  networking.hostName = "wsl";
 
   time.timeZone = "Europe/London";
 
