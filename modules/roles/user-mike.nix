@@ -80,6 +80,9 @@ in {
           push = {
             autoSetupRemote = true;
           };
+          url."git@github.com:" = {
+            pushInsteadOf = "https://github.com/";
+          };
         };
       };
       programs.neovim = {
