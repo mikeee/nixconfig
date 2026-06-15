@@ -30,6 +30,7 @@
       settings."github.com" = {
         HostName = "github.com";
         User = "git";
+        IdentityAgent = "/run/user/1000/wsl2-ssh-agent.sock";
         IdentityFile = "~/.ssh/github-main.pub";
         IdentitiesOnly = true;
       };
