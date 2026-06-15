@@ -10,6 +10,10 @@
     enable = true;
     defaultUser = "mike";
     startMenuLaunchers = true;
+    ssh-agent = {
+      enable = true;
+      users = [ "mike" ];
+    };
   };
 
   networking.hostName = "wsl";
