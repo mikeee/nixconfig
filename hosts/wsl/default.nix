@@ -1,4 +1,11 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
+let
+  wslSshAgentSocket = "/run/user/1000/wsl2-ssh-agent.sock";
+  sshKeygenWithWslAgent = pkgs.writeShellScript "ssh-keygen-wsl-agent" ''
+    export SSH_AUTH_SOCK="${wslSshAgentSocket}"
+    exec ${pkgs.openssh}/bin/ssh-keygen "$@"
+  '';
+in
 {
   imports = [
     ../common
@@ -30,11 +37,12 @@
       settings."github.com" = {
         HostName = "github.com";
         User = "git";
-        IdentityAgent = "/run/user/1000/wsl2-ssh-agent.sock";
+        IdentityAgent = wslSshAgentSocket;
         IdentityFile = "~/.ssh/github-main.pub";
         IdentitiesOnly = true;
       };
     };
+    programs.git.settings.gpg.ssh.program = "${sshKeygenWithWslAgent}";
   };
 
   time.timeZone = "Europe/London";
