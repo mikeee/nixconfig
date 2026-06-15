@@ -76,6 +76,13 @@ in {
           user = {
             name = "Mike Nguyen";
             email = "hey@mike.ee";
+            signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFIsG3aYMiSKMkWQko0AW2nzl+khUYgZ5eDyJeWFCFCX";
+          };
+          commit = {
+            gpgSign = true;
+          };
+          gpg = {
+            format = "ssh";
           };
           push = {
             autoSetupRemote = true;
