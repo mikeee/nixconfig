@@ -1,5 +1,6 @@
-{ config, pkgs, dotfiles, ... }:
+{ config, lib, pkgs, dotfiles, ... }:
 let
+  cfg = config.roles.user-mike;
   nvimConfigSource = pkgs.runCommand "nvim-config" { } ''
     cp -r ${dotfiles}/.config/nvim "$out"
     chmod -R u+w "$out"
@@ -23,66 +24,74 @@ let
     fi
   '';
 in {
-  users.users.mike = {
-    isNormalUser = true;
-    description = "mike";
-    home = "/home/mike";
-    shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "onepassword-cli" ];
+  options.roles.user-mike.linkDotfilesNvim = lib.mkOption {
+    type = lib.types.bool;
+    default = true;
+    description = "Link the Neovim configuration from the external dotfiles input.";
   };
 
-  programs.zsh.enable = true;
+  config = {
+    users.users.mike = {
+      isNormalUser = true;
+      description = "mike";
+      home = "/home/mike";
+      shell = pkgs.zsh;
+      extraGroups = [ "networkmanager" "wheel" "onepassword-cli" ];
+    };
 
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.backupFileExtension = "backup";
-  home-manager.users.mike = {
-    home.stateVersion = config.system.stateVersion;
-    xdg.configFile."nvim" = {
-      source = nvimConfigSource;
-      recursive = true;
-      force = true;
-    };
-    home.packages = with pkgs; [ vim git gcc ];
-    home.sessionVariables.EDITOR = "vim";
-    systemd.user.services.gpg-agent-startup-refresh = {
-      Unit = {
-        Description = "Refresh gpg-agent startup tty/display for GUI pinentry";
-        After = [ "graphical-session.target" ];
-        PartOf = [ "graphical-session.target" ];
+    programs.zsh.enable = true;
+
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+    home-manager.backupFileExtension = "backup";
+    home-manager.users.mike = {
+      home.stateVersion = config.system.stateVersion;
+      xdg.configFile."nvim" = lib.mkIf cfg.linkDotfilesNvim {
+        source = nvimConfigSource;
+        recursive = true;
+        force = true;
       };
-      Service = {
-        Type = "oneshot";
-        ExecStart = "${pkgs.gnupg}/bin/gpg-connect-agent updatestartuptty /bye";
-      };
-      Install.WantedBy = [ "graphical-session.target" ];
-    };
-    programs.bash = {
-      enable = true;
-      inherit shellAliases;
-      initExtra = gpgInitSnippet;
-    };
-    programs.git = {
-      enable = true;
-      settings = {
-        user = {
-          name = "Mike Nguyen";
-          email = "hey@mike.ee";
+      home.packages = with pkgs; [ vim git gcc ];
+      home.sessionVariables.EDITOR = "vim";
+      systemd.user.services.gpg-agent-startup-refresh = {
+        Unit = {
+          Description = "Refresh gpg-agent startup tty/display for GUI pinentry";
+          After = [ "graphical-session.target" ];
+          PartOf = [ "graphical-session.target" ];
         };
-        push = {
-          autoSetupRemote = true;
+        Service = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.gnupg}/bin/gpg-connect-agent updatestartuptty /bye";
+        };
+        Install.WantedBy = [ "graphical-session.target" ];
+      };
+      programs.bash = {
+        enable = true;
+        inherit shellAliases;
+        initExtra = gpgInitSnippet;
+      };
+      programs.git = {
+        enable = true;
+        settings = {
+          user = {
+            name = "Mike Nguyen";
+            email = "hey@mike.ee";
+          };
+          push = {
+            autoSetupRemote = true;
+          };
         };
       };
-    };
-    programs.neovim = {
-      enable = true;
-      withRuby = false;
-      withPython3 = false;
-    };
-    programs.zsh = {
-      enable = true;
-      inherit shellAliases;
-      initContent = gpgInitSnippet;
+      programs.neovim = {
+        enable = true;
+        withRuby = false;
+        withPython3 = false;
+      };
+      programs.zsh = {
+        enable = true;
+        inherit shellAliases;
+        initContent = gpgInitSnippet;
+      };
     };
   };
 }

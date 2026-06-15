@@ -14,6 +14,8 @@
 
   networking.hostName = "wsl";
 
+  roles.user-mike.linkDotfilesNvim = false;
+
   time.timeZone = "Europe/London";
 
   i18n.defaultLocale = "en_GB.UTF-8";
