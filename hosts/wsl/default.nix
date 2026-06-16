@@ -42,7 +42,10 @@ in
         IdentitiesOnly = true;
       };
     };
-    programs.git.settings.gpg.ssh.program = "${sshKeygenWithWslAgent}";
+    programs.git.settings = {
+      gpg.ssh.program = "${sshKeygenWithWslAgent}";
+      url."git@github.com:".insteadOf = "https://github.com/";
+    };
   };
 
   time.timeZone = "Europe/London";
