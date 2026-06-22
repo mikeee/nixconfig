@@ -16,6 +16,7 @@ in
   wsl = {
     enable = true;
     defaultUser = "mike";
+    interop.register = true;
     startMenuLaunchers = true;
     ssh-agent = {
       enable = true;
