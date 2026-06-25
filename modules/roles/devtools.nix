@@ -3,8 +3,8 @@ let
   copilotChat = pkgs.vscode-utils.extensionFromVscodeMarketplace {
     name = "copilot-chat";
     publisher = "GitHub";
-    version = "0.43.2026033101";
-    hash = "sha256-ZE94fVoihDHmCXWjGqcTlBH8hJzmK6bwpf4MAFRoM6U=";
+    version = "0.48.1";
+    hash = "sha256-eFLfYMFxvgtZtmwLsxfneMjD4jOg8/Uk0Eu/6+A6odY=";
   };
 in
 {
