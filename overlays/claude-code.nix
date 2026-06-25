@@ -1,19 +1,20 @@
 final: prev:
 let
+  version = "2.1.191";
   platformKey = "${final.stdenv.hostPlatform.node.platform}-${final.stdenv.hostPlatform.node.arch}";
   platformHashes = {
-    "darwin-arm64" = "sha256-6QNkbYt6MYgqgOzSdWmifYrFezcIdF80lwljLIQRf98=";
-    "darwin-x64" = "sha256-kU8jpwu+1dmuVn4+BLhiBu2ZcbNxvJuso/eciIW/3bQ=";
-    "linux-arm64" = "sha256-G7nQMkQKdVMvfdTK+8aH8iCq8Wxj66F+GS377C8EvSU=";
-    "linux-x64" = "sha256-hJ4AcnegRCqydXDT49bUN4dQeUZZDo3RlH5aObcIH54=";
+    "darwin-arm64" = "sha256-mf37VSpSYOZJrt0GwCTQpBBbCc7+wL9n1VjgF+5mxAA=";
+    "darwin-x64" = "sha256-boOq1fxP1Fn9dFOc2gbSJ5EF6sK+/GA9L7pklJdMsqQ=";
+    "linux-arm64" = "sha256-GjGny8/XhPjAc7/IoKFYP7bpPmDvcLdtf89mP/7YlJs=";
+    "linux-x64" = "sha256-EDjbqIvfG4CUHcPjg+k7CIMlsASXMprFDaRgyHhtW+4=";
   };
 in {
-  claude-code = prev.claude-code.overrideAttrs (finalAttrs: {
-    version = "2.1.170";
+  claude-code = prev.claude-code.overrideAttrs {
+    inherit version;
     src = final.fetchurl {
-      url = "https://downloads.claude.ai/claude-code-releases/${finalAttrs.version}/${platformKey}/claude";
+      url = "https://downloads.claude.ai/claude-code-releases/${version}/${platformKey}/claude";
       hash = platformHashes.${platformKey}
         or (throw "Unsupported claude-code platform: ${platformKey}");
     };
-  });
+  };
 }
