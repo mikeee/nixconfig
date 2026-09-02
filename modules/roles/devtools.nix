@@ -29,7 +29,7 @@ in
     bun
     cargo
     clippy
-    antigravity
+    antigravity-ide
     docker-compose
     rust-analyzer
     rustc
@@ -39,7 +39,7 @@ in
     github-copilot-cli
     jetbrains.goland
     jetbrains.rust-rover
-    gemini-cli
+    antigravity-cli
     gnumake
     nodejs
     pinentry-gnome3

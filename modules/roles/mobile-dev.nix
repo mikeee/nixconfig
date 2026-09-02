@@ -1,11 +1,11 @@
 { pkgs, ... }:
 let
   androidComposition = pkgs.androidenv.composeAndroidPackages {
-    platformVersions = [ "36" ];
-    buildToolsVersions = [ "36.0.0" ];
+    platformVersions = [ "37.1" ];
+    buildToolsVersions = [ "37.0.0" ];
     includeEmulator = true;
     includeSystemImages = true;
-    systemImageTypes = [ "google_apis_playstore" ];
+    systemImageTypes = [ "google_apis_playstore_ps16k" ];
     abiVersions = [ "x86_64" ];
     includeNDK = false;
     includeSources = false;
