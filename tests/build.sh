@@ -68,6 +68,7 @@ for host in "${HOSTS[@]}"; do
 
   nvim_dir="$hm_out/home-files/.config/nvim"
   nvim_init_link="$hm_out/home-files/.config/nvim/init.lua"
+  nvim_lazy_link="$hm_out/home-files/.config/nvim/lua/config/lazy.lua"
 
   if [[ ! -d "$nvim_dir" ]]; then
     echo "Expected directory missing: $nvim_dir"
@@ -76,6 +77,23 @@ for host in "${HOSTS[@]}"; do
 
   if [[ ! -L "$nvim_init_link" ]]; then
     echo "Expected symlink missing: $nvim_init_link"
+    exit 1
+  fi
+
+  link_dotfiles=$(nix "${NIX_FLAGS[@]}" eval --json ".#nixosConfigurations.${host}.config.roles.user-mike.linkDotfilesNvim" "${NIX_INPUT_ARGS[@]}")
+
+  if [[ "$link_dotfiles" == "true" ]]; then
+    if [[ ! -L "$nvim_lazy_link" ]]; then
+      echo "Expected Lazy configuration symlink missing: $nvim_lazy_link"
+      exit 1
+    fi
+
+    if ! grep -Fq 'local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"' "$nvim_lazy_link"; then
+      echo "Lazy configuration does not use a writable data path: $nvim_lazy_link"
+      exit 1
+    fi
+  elif ! grep -Fq 'require("lazy").setup({})' "$nvim_init_link"; then
+    echo "Fallback Lazy setup missing from generated init.lua: $nvim_init_link"
     exit 1
   fi
 

@@ -45,8 +45,6 @@ in
     SUBSYSTEM=="usb", ENV{ID_DEBUG_APPLIANCE}=="android", MODE="0660", GROUP="adbusers"
   '';
 
-  roles.user-mike.linkDotfilesNvim = false;
-
   home-manager.users.mike = {
     home.file.".ssh/github-main.pub".text = ''
       ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFIsG3aYMiSKMkWQko0AW2nzl+khUYgZ5eDyJeWFCFCX

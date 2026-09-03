@@ -94,6 +94,11 @@ in {
       };
       programs.neovim = {
         enable = true;
+        extraPackages = with pkgs; [ unzip wget ];
+        initLua = lib.optionalString (!cfg.linkDotfilesNvim) ''
+          require("lazy").setup({})
+        '';
+        plugins = [ pkgs.vimPlugins.lazy-nvim ];
         withRuby = false;
         withPython3 = false;
       };
