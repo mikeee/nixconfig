@@ -1,18 +1,18 @@
 final: prev:
 let
   inherit (final) lib stdenv;
-  version = "1.0.82";
+  version = "1.0.88";
 
   # The universal @github/copilot package is now just a loader stub; the real
   # SEA binary ships in the per-platform package, which we wrap directly.
   platform = {
     x86_64-linux = {
       name = "linux-x64";
-      hash = "sha256-I4t5YP7IL6l9xdju4BFR9N57WGA8yxhpvEDMmGcBQK0=";
+      hash = "sha256-TgIpuBeGGud4iJ/QIC26MIi/l/ivySVYHvaiiv9Kq34=";
     };
     aarch64-linux = {
       name = "linux-arm64";
-      hash = "sha256-+ufJ0BX10c+5829ZX5shn5WaKTkGbRfuu9mqHWDQPIU=";
+      hash = "sha256-MwmlzmZqbhQajBsYdN4RLl+jF1CMxR2zS3r50Pwv1lo=";
     };
   }.${stdenv.hostPlatform.system}
     or (throw "github-copilot-cli overlay: unsupported system ${stdenv.hostPlatform.system}");

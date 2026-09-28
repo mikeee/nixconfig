@@ -22,7 +22,6 @@ in {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   nixpkgs.overlays = [
-    (import ../../overlays/claude-code.nix)
     (import ../../overlays/github-copilot-cli.nix)
   ];
 
