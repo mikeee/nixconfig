@@ -33,18 +33,18 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Maximize runner disk space
         # apt/Debian-specific cleanup; only valid on the Ubuntu runners, not macOS.
         if: ${{ runner.os == 'Linux' }}
-        uses: justinthelaw/maximize-github-runner-space@6324f43808f0fd33e16ee8a0141fca09974b38e0 # v0.10.0
+        uses: justinthelaw/maximize-github-runner-space@bbaad53e5c844645ef54d9309adf96be46ab159e # v0.12.4
         with:
           # Remove all pre-installed toolchains/SDKs we don't need so the root
           # disk (where /nix/store lives) has room for the build. Leaves the
           # runner swapfile untouched since swapfile-size is unset.
           cleanup-profile: max
       - name: Install Nix
-        uses: cachix/install-nix-action@51f3067b56fe8ae331890c77d4e454f6d60615ff # v31
+        uses: cachix/install-nix-action@75c75c31ebece974e48ebc36b4ad125bd97bd97b # v31.11.3
         with:
           nix_path: nixpkgs=channel:nixos-unstable
           extra_nix_config: |
