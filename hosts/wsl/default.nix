@@ -24,6 +24,11 @@ in
     };
   };
 
+  systemd.user.services.wsl2-ssh-agent.serviceConfig = {
+    Restart = lib.mkForce "always";
+    RestartSec = 2;
+  };
+
   networking.hostName = "wsl";
 
   # usbipd-win's `usbipd attach --wsl` runs modprobe (vhci-hcd) inside WSL.
